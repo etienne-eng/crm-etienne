@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#b25b1f">
+<title>CRM Etienne</title><style>
+:root{color-scheme:light;--bg:#f6f4ee;--card:#fff;--ink:#1f1d1a;--muted:#6b665e;--line:#e8e2d4;--accent:#b25b1f;--soft:#f4e3d2;--ok:#2f7d4f;--warn:#a85a00;--danger:#b32b2b;--gold:#e3a93b;--blue:#5b6f9c;--sh:0 1px 2px rgba(31,29,26,.04),0 4px 16px rgba(31,29,26,.06)}
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+header{position:sticky;top:0;z-index:5;background:rgba(246,244,238,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:14px 18px 10px;border-bottom:1px solid var(--line);padding-top:max(14px,env(safe-area-inset-top))}
+.row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+h1{font-size:18px;font-weight:700;margin:0;display:flex;align-items:center;gap:10px}
+h1 .dot{width:9px;height:9px;border-radius:50%;background:var(--accent)}
+h1 .v{font-size:11px;background:var(--soft);color:var(--accent);padding:2px 7px;border-radius:99px;font-weight:600}
+.meta{font-size:13px;color:var(--muted)}
+.actions{display:flex;gap:6px;flex-wrap:wrap}
+.btn{background:var(--card);border:1px solid var(--line);color:var(--ink);padding:8px 12px;border-radius:8px;font:13px inherit;cursor:pointer;min-height:40px;-webkit-tap-highlight-color:transparent}
+.btn:hover{background:#fbf8f1}.btn:active{transform:scale(.97)}
+.btn.p{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.g{background:transparent;border:none;color:var(--muted)}
+.btn.m{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:5px}
+.btn.m.r{background:var(--danger);border-color:var(--danger);animation:pl 1.2s infinite}
+@keyframes pl{0%,100%{box-shadow:0 0 0 0 rgba(179,43,43,.45)}50%{box-shadow:0 0 0 10px rgba(179,43,43,0)}}
+main{padding:14px 18px 80px;max-width:1300px;margin:0 auto}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh);padding:16px;margin-bottom:14px}
+h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin:0 0 12px;display:flex;justify-content:space-between;align-items:baseline}
+.cnt{font-size:11px;background:var(--soft);color:var(--accent);padding:3px 8px;border-radius:99px;font-weight:600;text-transform:none;letter-spacing:0}
+.sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.s{background:#faf6ec;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.s .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.s .v{font-size:20px;font-weight:700;line-height:1.1;margin-top:4px}
+.s .v small{font-size:12px;font-weight:500;color:var(--muted);margin-left:3px}
+.ev{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;display:grid;grid-template-columns:80px 1fr auto;gap:12px;align-items:start}
+.ev.done{opacity:.55;background:#f9f7f0}
+.ev .w{font-weight:600;font-size:14px}.ev .w small{display:block;font-size:11px;color:var(--muted);font-weight:500}
+.ev .b .t{font-weight:600;font-size:15px}
+.ev .b .lc{color:var(--muted);font-size:13px;margin-top:3px}
+.ev .b .d{color:var(--muted);font-size:12px;margin-top:5px;font-style:italic}
+.tg{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.t{font-size:12px;padding:3px 8px;border-radius:99px;background:#f3ede0;border:1px solid var(--line);color:#5b5446}
+.t.dist{background:#ecf2ec;color:#2f5a3d}
+.t.wx{background:#eaf1f7;color:#234862}
+.t.sn{background:#fbf1d9;color:#7a5215}
+.t.wn{background:#fdf0e3;color:#9a4f0f}
+.empty{color:var(--muted);font-size:13px;padding:18px;text-align:center;font-style:italic}
+.foot{font-size:11px;color:var(--muted);margin-top:10px;text-align:center}
+.ws{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.wd{min-width:120px;flex:1;padding:10px;border:1px solid var(--line);border-radius:10px;background:#faf6ec}
+.wd.td{background:var(--soft);border-color:#e6c39a}
+.wd.sel{outline:2px solid var(--accent);outline-offset:-2px;background:#fff}
+.wd.past{opacity:.78;background:#f1ede2}
+.wd.past .nm{color:var(--muted)}
+.hh{flex-shrink:0;background:#fff;border:1px solid var(--line);border-radius:6px;padding:6px 4px;text-align:center;font-size:11px;min-width:54px;line-height:1.3}
+.hh .hi{font-size:18px;margin:2px 0}
+.hh .ht{font-weight:700;font-size:13px}
+.hh .hp{font-size:10px;color:#234862}
+.hh .hw{font-size:10px;color:#5a7340}
+.lbl{font-weight:500;text-transform:none;letter-spacing:0;color:var(--ink);font-size:13px}
+.nav{display:flex;gap:4px;margin-left:auto}
+.btn.sm{font-size:12px;padding:4px 8px;min-height:auto}
+.wd:hover{background:#fbf8f1}
+.wd.sel.td{background:var(--soft)}
+.wd .lb{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:600}
+.wd .nm{font-size:18px;font-weight:700;margin:2px 0}
+.wd .x{margin-top:4px;padding:3px 6px;background:#fff;border-radius:5px;border:1px solid var(--line);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);padding:8px 6px;border-bottom:1px solid var(--line)}
+td{padding:10px 6px;border-bottom:1px solid #f1eadb;vertical-align:top}
+tr:last-child td{border-bottom:none}
+.pl{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap}
+.pl.pd{background:#e3f2e7;color:var(--ok)}
+.pl.pn{background:#fdf0e3;color:var(--warn)}
+.pl.lt{background:#f9dfdf;color:var(--danger)}
+.sc{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.sc select,.sc input[type=date]{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fbf8f1;font:13px inherit;min-height:38px}
+.sc .gr{flex:1;min-width:140px}
+.suntab{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.suntab .c{background:#faf6ec;border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.suntab .c.gold{background:#fbf1d9;border-color:#ecdfb6}
+.suntab .c.blue{background:#e6ecf5;border-color:#c8d4e3}
+.suntab .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600}
+.suntab .v{font-size:14px;font-weight:600;margin-top:2px}
+.suntab .sv{font-size:12px;color:var(--muted)}
+.now-line{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px;padding:8px;background:#fbf8f1;border-radius:6px}
+.now-line b{color:var(--ink);font-weight:600}
+details textarea{width:100%;min-height:80px;border:1px solid var(--line);border-radius:8px;padding:10px;font:14px inherit;background:#fbf8f1;resize:vertical}
+.toast{position:fixed;bottom:max(20px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:99px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:99}
+.toast.show{opacity:.95}
+.mb{position:fixed;inset:0;background:rgba(20,18,15,.55);display:none;z-index:100;align-items:flex-end;justify-content:center}
+.mb.show{display:flex}
+@media(min-width:680px){.mb.show{align-items:center}}
+.mo{background:var(--card);border-radius:18px 18px 0 0;width:100%;max-width:560px;padding:20px;padding-bottom:max(20px,env(safe-area-inset-bottom))}
+@media(min-width:680px){.mo{border-radius:18px}}
+.mo h3{margin:0 0 6px;font-size:17px}.mo .sub{color:var(--muted);font-size:13px;margin-bottom:12px}
+.ma{display:flex;align-items:center;justify-content:center;gap:5px;height:50px;margin-bottom:10px}
+.ma i{display:inline-block;width:5px;background:var(--accent);border-radius:99px;animation:b 1.2s infinite}
+.ma i:nth-child(1){animation-delay:-1.2s;height:18px}.ma i:nth-child(2){animation-delay:-1.05s;height:30px}
+.ma i:nth-child(3){animation-delay:-.9s;height:42px}.ma i:nth-child(4){animation-delay:-.75s;height:30px}
+.ma i:nth-child(5){animation-delay:-.6s;height:18px}
+@keyframes b{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+.mo textarea{width:100%;min-height:80px;border:1px solid var(--line);border-radius:10px;padding:12px;font:15px inherit;background:#fbf8f1;resize:vertical}
+.ip{font-size:12px;color:var(--muted);margin-top:8px}.ip b{color:var(--ink)}
+.mac{display:flex;gap:8px;margin-top:12px;justify-content:flex-end;flex-wrap:wrap}
+@media(max-width:680px){.ev{grid-template-columns:64px 1fr}.ev>div:last-child{grid-column:1/-1}main{padding:12px 14px 80px}}
+.gd>div,.gd>aside{min-width:0}
+@media(min-width:980px){.gd{display:grid;grid-template-columns:1.6fr 1fr;gap:14px;align-items:start}.gd>aside section{margin-bottom:14px}}
+</style></head><body>
+
+<header><div class="row">
+<h1><span class="dot"></span>CRM Etienne <span class="v">v3.9</span></h1>
+<div class="meta" id="hm">Chargement…</div>
+<div class="actions">
+<button class="btn m" id="bm">🎤 Dicter</button>
+<button class="btn" id="rf">Météo</button>
+<button class="btn g" id="rs" title="Reset">⟲</button>
+</div></div></header>
+
+<main>
+
+<section><h2>Compteurs <span class="cnt" id="ml"></span></h2>
+<div class="sr">
+<div class="s"><div class="l">Tournées</div><div class="v" id="sv">0<small>jrs</small></div></div>
+<div class="s"><div class="l">Km mois</div><div class="v" id="sm">0<small>km</small></div></div>
+<div class="s"><div class="l">Km année</div><div class="v" id="sy">0<small>km</small></div></div>
+<div class="s"><div class="l">À encaisser</div><div class="v" id="si">0<small>$</small></div></div>
+</div></section>
+
+<div class="gd"><div>
+
+<section><h2><span id="th">Aujourd'hui</span> <span class="cnt" id="tc">—</span> <button class="btn g sm" id="ttd" style="display:none;margin-left:auto">↺</button></h2>
+<div id="tl"></div></section>
+
+<section><h2>Semaine <span id="wlbl" class="lbl"></span>
+<span class="nav"><button class="btn g sm" id="wprev">◀</button><button class="btn g sm" id="wnow">Aujourd'hui</button><button class="btn g sm" id="wnext">▶</button></span></h2>
+<div class="ws" id="wk"></div></section>
+
+<section><h2>Clients & factures <span class="cnt" id="cc">—</span></h2>
+<table><thead><tr><th>Client</th><th>Type</th><th>Lieu</th><th>Statut</th></tr></thead>
+<tbody id="ctb"></tbody></table></section>
+
+</div><aside>
+
+<section><h2>☀ Soleil — par site</h2>
+<div class="sc">
+<select id="ss" class="gr"></select>
+<input type="date" id="sd">
+</div>
+<div id="sa" class="foot" style="text-align:left;margin:0 0 10px"></div>
+<div class="suntab" id="st"></div>
+<div class="now-line" id="snw"></div>
+<div style="margin-top:10px;padding:12px;background:linear-gradient(135deg,#eaf1f7,#fbf8f1);border:1px solid var(--line);border-radius:10px">
+<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:6px">Météo · <span id="swxd">—</span></div>
+<div id="swx" style="display:flex;flex-wrap:wrap;gap:6px;font-size:13px;min-height:30px"></div>
+<div id="swxlinks" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;font-size:12px"></div>
+</div>
+<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-top:14px;margin-bottom:6px">Prévisions heure par heure</div>
+<div id="hwx" style="display:flex;overflow-x:auto;gap:4px;padding-bottom:6px;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:8px;padding:8px;background:#fbf8f1"></div>
+</section>
+
+<section><h2>Notes du jour</h2>
+<details open><summary id="ns">—</summary>
+<textarea id="dn" placeholder="Idées de cadrage, matériel, choses à régler… (ou bouton 🎤 Dicter)"></textarea>
+</details></section>
+
+</aside></div>
+
+</main>
+
+<div class="mb" id="vm"><div class="mo">
+<h3>Dictée</h3>
+<div class="sub" id="vs">Parle, j'écoute…</div>
+<div class="ma" id="manim"><i></i><i></i><i></i><i></i><i></i></div>
+<textarea id="vt" placeholder="Texte dicté…"></textarea>
+<div class="ip" id="vi"></div>
+<div class="mac">
+<button class="btn g" id="vc">Annuler</button>
+<button class="btn" id="vr">Reprendre</button>
+<button class="btn p" id="va">Appliquer</button>
+</div></div></div>
+
+<div class="toast" id="ts"></div>
+
+<script>
+const HOME={label:"151 ch. des Moulins, Saint-Séverin QC",lat:46.5870,lon:-72.5240,gc:false};
+const LB={lat:46.6489,lon:-72.8430,addr:"Vallée du Parc, Shawinigan"};
+const FI={lat:46.6230,lon:-72.4450,addr:"Saint-Prosper QC"};
+const LBT={ad:1,t:"Vérifier T° drone — Jean-Marc Lebeau",d:"Drone, plans, mont de ski",lo:"Vallée du Parc, Shawinigan",cl:"Jean-Marc Lebeau",co:LB};
+const EVT=[
+{...LBT,id:"e505lb",date:"2026-05-05"},
+{id:"e505a",date:"2026-05-05",s:"10:00",e:"11:00",t:"Créneau 10h — sans titre",d:"À confirmer",lo:null,cl:null},
+{id:"e505b",date:"2026-05-05",s:"20:00",e:"21:00",t:"Session zéro Claude code",d:"",lo:null,cl:null},
+{id:"e506fil",date:"2026-05-06",s:"08:00",e:"09:00",t:"Martin Filion — int/ext + drone",d:"Shoot int/ext + drone",lo:"2200 Rang St-Charles, Saint-Prosper",cl:"Martin Filion",co:FI},
+{...LBT,id:"e506lb",date:"2026-05-06"},
+{id:"e506h",date:"2026-05-06",s:"16:00",e:"17:00",t:"RDV hypothèque",d:"",lo:null,cl:null},
+{id:"e506k",date:"2026-05-06",ad:1,t:"Montage vidéo — Karine",d:"",lo:null,cl:"Karine"},
+{...LBT,id:"e507lb",date:"2026-05-07"},
+{id:"e507p",date:"2026-05-07",ad:1,t:"Paie de Karine",d:"",lo:null,cl:"Karine"},
+{...LBT,id:"e508lb",date:"2026-05-08"},
+{...LBT,id:"e509lb",date:"2026-05-09"},
+{...LBT,id:"e510lb",date:"2026-05-10"},
+{...LBT,id:"e511lb",date:"2026-05-11"}
+];
+const CLI=[
+{n:"Jean-Marc Lebeau",ty:"Drone — mont de ski",lo:"Vallée du Parc",st:"a",no:"Récurrent — vérif météo quotidienne"},
+{n:"Martin Filion",ty:"Int/Ext + drone",lo:"Saint-Prosper QC",st:"sc",no:"Shoot 6 mai 8h"},
+{n:"Katryn Lafontaine (RE/MAX)",ty:"Facture #1013",lo:"—",st:"ip",am:250,no:"Émise 1er mai"},
+{n:"Jonathan Beaupied",ty:"Facture #1012",lo:"—",st:"ip",am:1500,no:"Émise 1er mai"},
+{n:"Karine (employée)",ty:"Paie + montage",lo:"—",st:"in",no:"Paie 7 mai · Montage 6 mai"},
+{n:"Snappr (Leslie)",ty:"Onboarding",lo:"—",st:"td",no:"Consulter dossier d'info"}
+];
+const PEND=CLI.filter(c=>c.st==="ip").reduce((a,b)=>a+(b.am||0),0);
+
+const LSK="crm-et-v3.9";
+const def=()=>({vd:{},gc:{},wc:{},nt:{},hc:null});
+const ld=()=>{try{return Object.assign(def(),JSON.parse(localStorage.getItem(LSK))||{});}catch(e){return def();}};
+const sv=s=>localStorage.setItem(LSK,JSON.stringify(s));
+let S=ld();
+let SEL=null,WST=null;
+if(S.hc){HOME.lat=S.hc.lat;HOME.lon=S.hc.lon;HOME.gc=true;}
+
+const tR=d=>d*Math.PI/180,tD=r=>r*180/Math.PI;
+function jd(D){const y=D.getUTCFullYear(),m=D.getUTCMonth()+1,d=D.getUTCDate();const h=D.getUTCHours()+D.getUTCMinutes()/60+D.getUTCSeconds()/3600;let yy=y,mm=m;if(mm<=2){yy--;mm+=12}const A=Math.floor(yy/100),B=2-A+Math.floor(A/4);return Math.floor(365.25*(yy+4716))+Math.floor(30.6001*(mm+1))+d+B-1524.5+h/24;}
+function sp(la,lo,D){const J0=jd(D),n=J0-2451545+0.0008,J=n-lo/360;const M=(357.5291+0.98560028*J)%360;const C=1.9148*Math.sin(tR(M))+0.02*Math.sin(tR(2*M));const lm=(M+C+180+102.9372)%360;const Jt=2451545+J+0.0053*Math.sin(tR(M))-0.0069*Math.sin(tR(2*lm));const dc=tD(Math.asin(Math.sin(tR(lm))*Math.sin(tR(23.4397))));const aL=a=>{const c=(Math.sin(tR(a))-Math.sin(tR(la))*Math.sin(tR(dc)))/(Math.cos(tR(la))*Math.cos(tR(dc)));if(c>1||c<-1)return null;return tD(Math.acos(c));};const ev=(a,r)=>{const H=aL(a);if(H===null)return null;return new Date(((Jt+(r?-H:H)/360)-2440587.5)*86400000);};const T=(J0-2451545)/36525;const ml=(280.46646+36000.76983*T)%360,ma=357.52911+35999.05029*T;const ec=Math.sin(tR(ma))*(1.914602-0.004817*T)+Math.sin(tR(2*ma))*0.019993;const tl=ml+ec,ob=23.439-4e-7*T;const ra=tD(Math.atan2(Math.cos(tR(ob))*Math.sin(tR(tl)),Math.cos(tR(tl))));const de=tD(Math.asin(Math.sin(tR(ob))*Math.sin(tR(tl))));const gm=(18.697374558+24.06570982441908*(J0-2451545))%24;const ls=(gm*15+lo)%360,ha=((ls-ra+540)%360)-180;const e=tD(Math.asin(Math.sin(tR(la))*Math.sin(tR(de))+Math.cos(tR(la))*Math.cos(tR(de))*Math.cos(tR(ha))));let az=tD(Math.atan2(-Math.sin(tR(ha)),Math.tan(tR(de))*Math.cos(tR(la))-Math.sin(tR(la))*Math.cos(tR(ha))));az=(az+360)%360;return{sr:ev(-0.83,1),ss:ev(-0.83,0),no:new Date((Jt-2440587.5)*86400000),gas:ev(-4,1),gae:ev(6,1),gps:ev(6,0),gpe:ev(-4,0),bas:ev(-6,1),bae:ev(-0.83,1),bps:ev(-0.83,0),bpe:ev(-6,0),el:e,az};}
+const aC=a=>{const d=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSO","SO","OSO","O","ONO","NO","NNO"];return d[Math.round(((a%360)+360)%360/22.5)%16];};
+const hav=(la1,lo1,la2,lo2)=>{const R=6371,dL=tR(la2-la1),dO=tR(lo2-lo1);const a=Math.sin(dL/2)**2+Math.cos(tR(la1))*Math.cos(tR(la2))*Math.sin(dO/2)**2;return 2*R*Math.asin(Math.sqrt(a));};
+const rd=d=>d*1.3;
+async function gc(a){if(!a)return null;if(S.gc[a])return S.gc[a];try{const r=await fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&q="+encodeURIComponent(a));const j=await r.json();if(j&&j.length){const c={lat:parseFloat(j[0].lat),lon:parseFloat(j[0].lon)};S.gc[a]=c;sv(S);return c;}}catch(e){}return null;}
+const WX={0:"Clair",1:"Peu nuageux",2:"Nuageux",3:"Couvert",45:"Brouillard",48:"Brouillard",51:"Bruine",53:"Bruine",55:"Bruine",61:"Pluie",63:"Pluie",65:"Pluie forte",71:"Neige",73:"Neige",75:"Neige forte",80:"Averses",81:"Averses",82:"Averses",95:"Orage"};
+const WI={0:"☀",1:"🌤",2:"⛅",3:"☁",45:"🌫",48:"🌫",51:"🌦",53:"🌧",55:"🌧",61:"🌧",63:"🌧",65:"⛈",71:"🌨",73:"🌨",75:"❄",80:"🌦",81:"🌧",82:"⛈",95:"⛈",96:"⛈",99:"⛈"};
+async function fhh(la,lo,d){const k=la.toFixed(3)+","+lo.toFixed(3)+"|h"+d;const c=S.wc[k];const past=d<today();const cT=past?2592e6:1.8e6;if(c&&Date.now()-c.ts<cT)return c;try{const u=`https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${lo}&hourly=temperature_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_gusts_10m&timezone=America%2FToronto&start_date=${d}&end_date=${d}`;const r=await fetch(u);const j=await r.json();const o={ts:Date.now(),tm:j.hourly?.time,t:j.hourly?.temperature_2m,p:j.hourly?.precipitation_probability,pp:j.hourly?.precipitation,c:j.hourly?.weather_code,w:j.hourly?.wind_speed_10m,g:j.hourly?.wind_gusts_10m,past};S.wc[k]=o;sv(S);return o;}catch(e){return null;}}
+function rHS(h){if(!h||!h.tm||!h.tm.length)return '<span style="color:var(--muted);font-size:12px">Pas de données.</span>';const past=h.past;let html="";for(let i=0;i<h.tm.length;i++){const tm=h.tm[i].slice(11,16),tp=Math.round(h.t?.[i]??0),ic=WI[h.c?.[i]]||"·",pr=h.p?.[i]??0,wd=Math.round(h.w?.[i]??0),gs=Math.round(h.g?.[i]??0),pmm=h.pp?.[i]??0;const pD=past?(pmm>0?pmm.toFixed(1)+"mm":"—"):(pr+"%");const pC=(past?pmm>2:pr>60)?";color:#a85a00":"";const wC=gs>30?";color:#b32b2b":gs>20?";color:#a85a00":"";html+=`<div class="hh"><b>${tm}</b><div class="hi">${ic}</div><div class="ht">${tp}°</div><div class="hp" style="${pC}">${pD}</div><div class="hw" style="${wC}">${wd}/${gs}</div></div>`;}return html;}
+function wxH(wx){if(!wx)return "";const desc=WX[wx.c]||"Météo";const pfx=wx.past?"📊 ":"🌤 ";let pr="";if(wx.past){if(wx.ps>0)pr=` · ${wx.ps.toFixed(1)} mm tombés`;}else if(wx.pp>0)pr=` · ${wx.pp}% pluie`+(wx.ps>0?` (${wx.ps.toFixed(1)} mm)`:"");let h=`<span class="t wx">${pfx}${Math.round(wx.mn)}°/${Math.round(wx.mx)}° · ${desc}${pr}${wx.wn!=null?` · vent ${Math.round(wx.wn)}`:""}${wx.past?" · observé":""}</span>`;if(wx.wn>30)h+='<span class="t wn">⚠ Vent fort — drone risqué</span>';const hv=wx.past?wx.ps>5:(wx.pp>60||wx.ps>5);if(hv)h+=`<span class="t wn">⚠ Pluie ${wx.past?"significative":"probable"}</span>`;return h;}
+async function wf(la,lo,d){const k=la.toFixed(3)+","+lo.toFixed(3)+"|"+d;const c=S.wc[k];const t=today();const past=d<t;const cT=past?2592e6:3.6e6;if(c&&Date.now()-c.ts<cT)return c;try{const u=`https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${lo}&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max,precipitation_sum,wind_speed_10m_max&timezone=America%2FToronto&start_date=${d}&end_date=${d}`;const r=await fetch(u);const j=await r.json();const o={ts:Date.now(),mn:j.daily?.temperature_2m_min?.[0],mx:j.daily?.temperature_2m_max?.[0],c:j.daily?.weather_code?.[0],pp:j.daily?.precipitation_probability_max?.[0],ps:j.daily?.precipitation_sum?.[0],wn:j.daily?.wind_speed_10m_max?.[0],past};S.wc[k]=o;sv(S);return o;}catch(e){return null;}}
+const fmD=d=>d.toLocaleDateString("fr-CA",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+const fmT=d=>d?d.toLocaleTimeString("fr-CA",{hour:"2-digit",minute:"2-digit",hour12:false}):"—";
+const iso=d=>{const o=d.getTimezoneOffset()*60000;return new Date(d-o).toISOString().slice(0,10);};
+const today=()=>iso(new Date());
+const $=id=>document.getElementById(id);
+function tst(m){const t=$("ts");t.textContent=m;t.classList.add("show");clearTimeout(tst._);tst._=setTimeout(()=>t.classList.remove("show"),2000);}
+
+function rH(){const n=new Date();$("hm").textContent=fmD(n).replace(/^./,c=>c.toUpperCase())+" · "+fmT(n);$("ml").textContent=n.toLocaleDateString("fr-CA",{month:"long",year:"numeric"});$("ns").textContent="Notes — "+n.toLocaleDateString("fr-CA",{day:"numeric",month:"short"});}
+function rS(){const ymS=iso(new Date(new Date().getFullYear(),new Date().getMonth(),1)),yS=iso(new Date(new Date().getFullYear(),0,1));let kM=0,kY=0,d=0;for(const[k,v]of Object.entries(S.vd)){if(v?.validated){d++;if(k>=yS)kY+=v.km||0;if(k>=ymS)kM+=v.km||0;}}$("sv").innerHTML=d+'<small>jrs</small>';$("sm").innerHTML=Math.round(kM)+'<small>km</small>';$("sy").innerHTML=Math.round(kY)+'<small>km</small>';$("si").innerHTML=PEND+'<small>$</small>';}
+const eF=d=>EVT.filter(e=>e.date===d).sort((a,b)=>a.ad&&!b.ad?-1:!a.ad&&b.ad?1:(a.s||"").localeCompare(b.s||""));
+
+async function rT(){
+  const t=SEL||today(),isToday=t===today(),evts=eF(t);$("tc").textContent=evts.length;
+  const dt=new Date(t+"T12:00:00Z");
+  const lbl=isToday?"Aujourd'hui":dt.toLocaleDateString("fr-CA",{weekday:"long",day:"numeric",month:"long"}).replace(/^./,c=>c.toUpperCase());
+  $("th").textContent=lbl;
+  $("ttd").style.display=isToday?"none":"inline-block";
+  if($("sd"))$("sd").value=t;
+  rW();rSun();
+  const c=$("tl");c.innerHTML="";
+  if(!evts.length){c.innerHTML=`<div class="empty">Rien ${isToday?"aujourd'hui":"ce jour-là"}.</div>`;return;}
+  for(const e of evts){
+    const div=document.createElement("div");div.className="ev";
+    const v=(S.vd[t]||{}).events||{};if(v[e.id])div.classList.add("done");
+    const w=e.ad?'<div class="w">Journée<small>complète</small></div>':`<div class="w">${e.s}<small>→ ${e.e||""}</small></div>`;
+    div.innerHTML=w+`<div class="b"><div class="t">${e.t}</div>${e.lo?`<div class="lc">📍 ${e.lo}</div>`:""}${e.d?`<div class="d">${e.d}</div>`:""}<div class="tg" id="tg${e.id}"></div></div><div><button class="btn p" data-tg="${e.id}">${v[e.id]?"✓":"Terminée"}</button></div>`;
+    c.appendChild(div);
+    const tb=$("tg"+e.id);
+    if(e.co){
+      const km=rd(hav(HOME.lat,HOME.lon,e.co.lat,e.co.lon));
+      tb.insertAdjacentHTML("beforeend",`<span class="t dist">🚗 ${Math.round(km)} km</span>`);
+      const sun=sp(e.co.lat,e.co.lon,new Date(t+"T12:00:00Z"));
+      if(sun.sr)tb.insertAdjacentHTML("beforeend",`<span class="t sn">☀ ${fmT(sun.sr)}–${fmT(sun.ss)}</span>`);
+      const wx=await wf(e.co.lat,e.co.lon,t);
+      if(wx)tb.insertAdjacentHTML("beforeend",wxH(wx));
+    }
+  }
+  c.querySelectorAll("button[data-tg]").forEach(b=>b.onclick=()=>tg(b.getAttribute("data-tg")));
+}
+function tg(id){const t=SEL||today();const d=S.vd[t]=S.vd[t]||{events:{},km:0,validated:false};d.events[id]=!d.events[id];const any=Object.values(d.events).some(x=>x);d.validated=any;if(any){let km=0;for(const e of eF(t))if(d.events[e.id]&&e.co)km+=rd(hav(HOME.lat,HOME.lon,e.co.lat,e.co.lon))*2;d.km=Math.round(km);d.validatedAt=new Date().toISOString();}else{d.km=0;}sv(S);tst(any?"Tournée — "+d.km+" km":"Validation retirée");rS();rT();}
+
+function rW(){const w=$("wk");w.innerHTML="";const t=today(),sel=SEL||t,start=WST||t;const dStart=new Date(start+"T00:00:00");const dEnd=new Date(dStart);dEnd.setDate(dEnd.getDate()+6);$("wlbl").textContent=dStart.toLocaleDateString("fr-CA",{day:"numeric",month:"short"})+" → "+dEnd.toLocaleDateString("fr-CA",{day:"numeric",month:"short"});for(let i=0;i<7;i++){const d=new Date(dStart);d.setDate(d.getDate()+i);const is=iso(d),evs=eF(is),isPast=is<t;const c=document.createElement("div");c.className="wd"+(is===t?" td":"")+(is===sel?" sel":"")+(isPast?" past":"");c.style.cursor="pointer";c.dataset.date=is;const wd=d.toLocaleDateString("fr-CA",{weekday:"short"}).replace(".","");c.innerHTML=`<div class="lb">${wd}</div><div class="nm">${d.getDate()}</div>`;if(!evs.length)c.innerHTML+='<div class="x" style="color:#999">—</div>';else{for(const e of evs.slice(0,3))c.innerHTML+=`<div class="x">${e.ad?"":(e.s+" ")}${e.cl||e.t.split("—")[0].trim()}</div>`;if(evs.length>3)c.innerHTML+=`<div class="x">+${evs.length-3}</div>`;}c.onclick=()=>{SEL=is;rT();$("tl").scrollIntoView({behavior:"smooth",block:"start"});};w.appendChild(c);}}
+function shiftWeek(days){const cur=WST||today();const d=new Date(cur+"T00:00:00");d.setDate(d.getDate()+days);WST=iso(d);rW();}
+
+function findSite(c){if(!c.lo||c.lo==="—")return -1;return SITES.findIndex(s=>(s.label||"").includes(c.n.split(" ")[0])||(s.addr||"").includes(c.lo.split(" ")[0])||(s.label||"").toLowerCase().includes((c.lo||"").toLowerCase().split(",")[0]));}
+function rC(){$("cc").textContent=CLI.length;const tb=$("ctb");tb.innerHTML="";const pf=(c)=>c.st==="ip"?`<span class="pl pn">À encaisser ${c.am}$</span>`:c.st==="a"?`<span class="pl pd">Actif</span>`:c.st==="sc"?`<span class="pl pn">Planifié</span>`:c.st==="td"?`<span class="pl lt">À faire</span>`:c.st==="in"?`<span class="pl pd">Interne</span>`:"";for(const c of CLI){const tr=document.createElement("tr");const si=findSite(c);if(si>=0){tr.style.cursor="pointer";tr.title="Cliquer pour voir météo + soleil de ce client";tr.onclick=()=>{$("ss").value=String(si);rSun();$("ss").scrollIntoView({behavior:"smooth",block:"center"});};}tr.innerHTML=`<td><b>${c.n}</b>${si>=0?' <span style="color:var(--accent);font-size:11px">→ soleil</span>':""}<div style="color:var(--muted);font-size:12px">${c.no||""}</div></td><td>${c.ty}</td><td>${c.lo||"—"}</td><td>${pf(c)}</td>`;tb.appendChild(tr);}}
+
+let SITES=[];
+function bs(){const s=[{id:"home",label:"Domicile / Studio",addr:HOME.label,lat:HOME.lat,lon:HOME.lon}];const sn=new Set();for(const e of EVT)if(e.co){const k=`${e.co.lat.toFixed(3)},${e.co.lon.toFixed(3)}`;if(!sn.has(k)){sn.add(k);s.push({id:e.id,label:(e.cl||"Site")+" — "+(e.lo||""),addr:e.co.addr||e.lo||"",lat:e.co.lat,lon:e.co.lon});}}return s;}
+async function rSun(){
+  const i=parseInt($("ss").value||"0",10),s=SITES[i]||SITES[0];if(!s)return;
+  const d=$("sd").value||today();
+  const sNoon=sp(s.lat,s.lon,new Date(d+"T12:00:00Z"));
+  const sNow=sp(s.lat,s.lon,new Date());
+  $("sa").innerHTML=`<b style="color:var(--ink)">${s.label}</b><br>📍 ${s.addr}`;
+  const tab=$("st");
+  tab.innerHTML=`
+<div class="c"><div class="l">Lever</div><div class="v">${fmT(sNoon.sr)}</div><div class="sv">au site</div></div>
+<div class="c"><div class="l">Midi solaire</div><div class="v">${fmT(sNoon.no)}</div><div class="sv">soleil au + haut</div></div>
+<div class="c"><div class="l">Coucher</div><div class="v">${fmT(sNoon.ss)}</div><div class="sv">au site</div></div>
+<div class="c blue"><div class="l">Heure bleue AM</div><div class="v">${fmT(sNoon.bas)}–${fmT(sNoon.bae)}</div><div class="sv">avant le lever</div></div>
+<div class="c gold"><div class="l">Heure dorée AM</div><div class="v">${fmT(sNoon.gas)}–${fmT(sNoon.gae)}</div><div class="sv">après le lever</div></div>
+<div class="c gold"><div class="l">Heure dorée PM</div><div class="v">${fmT(sNoon.gps)}–${fmT(sNoon.gpe)}</div><div class="sv">avant coucher</div></div>
+<div class="c blue"><div class="l">Heure bleue PM</div><div class="v">${fmT(sNoon.bps)}–${fmT(sNoon.bpe)}</div><div class="sv">après coucher</div></div>`;
+  if(d===today()){$("snw").innerHTML=sNow.el>0?`Maintenant : soleil à <b>${Math.round(sNow.el)}°</b> d'élévation, azimut <b>${Math.round(sNow.az)}° (${aC(sNow.az)})</b>`:`Maintenant : soleil sous l'horizon (élév ${Math.round(sNow.el)}°)`;$("snw").style.display="";}else{const noonPos=sNoon.no?sp(s.lat,s.lon,sNoon.no):null;$("snw").innerHTML=noonPos?`Au midi solaire : soleil à <b>${Math.round(noonPos.el)}°</b> max, azimut <b>${Math.round(noonPos.az)}° (${aC(noonPos.az)})</b>`:"";$("snw").style.display=noonPos?"":"none";}
+  const q=encodeURIComponent(s.label),lk=(h,t)=>`<a target=_blank rel=noopener href="${h}" class="t" style="text-decoration:none">${t}</a>`;
+  $("swxlinks").innerHTML=lk(`https://www.windy.com/?${s.lat},${s.lon},10`,"🌬 Windy")+lk("https://weather.gc.ca/","🍁 Env. Canada")+lk(`https://www.meteomedia.com/ca/recherche?q=${q}`,"☁ MétéoMédia")+lk(`https://www.google.com/search?q=${encodeURIComponent("météo "+s.label)}`,"🔍 Google");
+  $("swxd").textContent=`${s.label} · ${new Date(d+"T12:00:00Z").toLocaleDateString("fr-CA",{weekday:"short",day:"numeric",month:"short"})}`;
+  $("swx").innerHTML='<span style="color:var(--muted)">⏳ Chargement…</span>';
+  $("hwx").innerHTML='<span style="color:var(--muted);font-size:12px;padding:6px">⏳</span>';
+  const [wx,hr]=await Promise.all([wf(s.lat,s.lon,d),fhh(s.lat,s.lon,d)]);
+  $("swx").innerHTML=wx?wxH(wx):'<span style="color:var(--danger);font-size:12px"><b>⚠ Bloqué</b> — voir ↓</span>';
+  $("hwx").innerHTML=hr?rHS(hr):(!wx?'<div style="padding:8px;font-size:12px;background:#fff;border-radius:6px"><b>Sandbox bloque Open-Meteo.</b> Ouvre dans Chrome ou Netlify pour la météo réelle.</div>':'—');
+}
+function bSun(){SITES=bs();const sl=$("ss");sl.innerHTML=SITES.map((s,i)=>`<option value="${i}">${s.label}</option>`).join("");$("sd").value=today();sl.onchange=rSun;$("sd").onchange=()=>{SEL=$("sd").value||null;rT();};}
+
+function bN(){const ta=$("dn"),t=today();ta.value=S.nt[t]||"";ta.oninput=()=>{S.nt[t]=ta.value;sv(S);};}
+
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let rec=null,vt="";
+function oV(){$("vm").classList.add("show");$("vt").value="";vt="";$("vi").textContent="";if(!SR){$("vs").innerHTML='⚠ Dictée non supportée. Tape dans la zone.';$("manim").style.display="none";return;}$("manim").style.display="flex";stR();}
+function stR(){if(!SR)return;if(rec)try{rec.stop()}catch(e){}rec=new SR();rec.lang="fr-CA";rec.continuous=true;rec.interimResults=true;
+rec.onstart=()=>{$("bm").classList.add("r");$("vs").textContent="🔴 Enregistrement…";};
+rec.onresult=e=>{let int="",fn="";for(let i=e.resultIndex;i<e.results.length;i++){const tr=e.results[i][0].transcript;if(e.results[i].isFinal)fn+=tr;else int+=tr;}if(fn)vt=(vt+" "+fn).trim();$("vt").value=vt+(int?" "+int:"");iCmd($("vt").value);};
+rec.onerror=e=>{$("vs").textContent="Erreur : "+e.error;$("bm").classList.remove("r");};
+rec.onend=()=>{$("bm").classList.remove("r");$("vs").textContent="Terminé.";};
+try{rec.start();}catch(e){}}
+function iCmd(text){const ip=$("vi");if(!text){ip.innerHTML="";return;}const t=text.toLowerCase();let act=null;if(/(marqu[eé]|valid[eé]|fin(i|is)|termin[eé])/.test(t)&&/(tourn[eé]e|journ[eé]e)/.test(t))act={k:"v",d:"Valider la tournée"};const km=t.match(/(\d+)\s*(km|kilom[eè]tres?)/);if(km)act={k:"km",v:parseInt(km[1],10),d:`Ajouter ${km[1]} km`};if(act){ip.innerHTML=`Commande : <b>${act.d}</b>`;ip.dataset.act=JSON.stringify(act);}else{ip.innerHTML="Sera ajouté aux notes.";delete ip.dataset.act;}}
+function clV(){$("vm").classList.remove("show");if(rec)try{rec.stop()}catch(e){}$("bm").classList.remove("r");}
+function apV(){const text=$("vt").value.trim();const ip=$("vi");const act=ip.dataset.act?JSON.parse(ip.dataset.act):null;const t=today();if(act?.k==="v"){const d=S.vd[t]=S.vd[t]||{events:{},km:0,validated:false};d.validated=true;d.validatedAt=new Date().toISOString();if(!d.km){let km=0;for(const e of eF(t))if(e.co)km+=rd(hav(HOME.lat,HOME.lon,e.co.lat,e.co.lon))*2;d.km=Math.round(km);}sv(S);rS();rT();tst("Tournée validée — "+d.km+" km");}else if(act?.k==="km"){const d=S.vd[t]=S.vd[t]||{events:{},km:0,validated:true};d.km=(d.km||0)+act.v;d.validated=true;sv(S);rS();tst("+"+act.v+" km");}else if(text){const ta=$("dn");const stamp=new Date().toLocaleTimeString("fr-CA",{hour:"2-digit",minute:"2-digit"});ta.value=(ta.value?ta.value+"\n":"")+`[${stamp}] ${text}`;S.nt[t]=ta.value;sv(S);tst("Note ajoutée");}clV();}
+function bV(){$("bm").onclick=oV;$("vc").onclick=clV;$("vr").onclick=stR;$("va").onclick=apV;$("vt").oninput=e=>{vt=e.target.value;iCmd(e.target.value);};$("vm").onclick=e=>{if(e.target.id==="vm")clV();};}
+
+async function init(){
+  console.log("CRM Etienne v3.9 chargé · "+new Date().toISOString());
+  try{
+    rH();rS();bSun();rC();rW();bN();rSun();bV();
+    await rT();
+    if(!HOME.gc){const c=await gc(HOME.label);if(c){HOME.lat=c.lat;HOME.lon=c.lon;HOME.gc=true;S.hc=c;sv(S);SITES=bs();$("ss").innerHTML=SITES.map((s,i)=>`<option value="${i}">${s.label}</option>`).join("");rSun();}}
+    setInterval(()=>{rH();rSun();},60000);
+  }catch(e){console.error(e);$("hm").textContent="Erreur init: "+e.message;}
+}
+$("rf").onclick=async()=>{S.wc={};sv(S);await rT();tst("OK");};
+$("ttd").onclick=()=>{SEL=null;WST=null;rT();};
+$("wprev").onclick=()=>shiftWeek(-7);
+$("wnext").onclick=()=>shiftWeek(7);
+$("wnow").onclick=()=>{WST=null;rW();};
+$("rs").onclick=()=>{if(confirm("Effacer données ?")){localStorage.removeItem(LSK);S=ld();rS();rT();bN();}};
+init();
+</script>
+</body></html>
+ 
