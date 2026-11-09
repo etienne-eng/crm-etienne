@@ -12,9 +12,13 @@ français, étape par étape, et ouvrir la discussion avec Etienne.
 ## 1. Lancer l'extraction
 
 ```bash
-python3 .claude/skills/analyse-video/scripts/analyse_video.py "<LIEN_OU_FICHIER>" \
+python3 "<dossier de cette skill>/scripts/analyse_video.py" "<LIEN_OU_FICHIER>" \
   --out "<dossier-scratchpad>/analyse-video/<nom-court>"
 ```
+
+`<dossier de cette skill>` : le « Base directory » indiqué au chargement de
+la skill (par exemple `~/.claude/skills/analyse-video` ou
+`.claude/skills/analyse-video` dans le dépôt).
 
 - `<LIEN_OU_FICHIER>` : le lien donné par Etienne, ou le chemin du fichier
   joint (les pièces jointes sont dans `~/.claude/uploads/…`).
